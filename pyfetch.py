@@ -29,30 +29,61 @@ print (bcolors.OKBLUE + "\t---- software -------" + bcolors.ENDC)
 
 import distro
 import platform
-distro = open('/etc/lsb-release', 'r').read()
-distro = distro.replace('\n', '')
-distro = distro.replace('"', '')
-x=distro.find("DISTRIB_DESCRIPTION=")+20
-print (bcolors.OKGREEN + bcolors.BOLD + "\tOS: " + bcolors.ENDC + distro[x:] + " " + platform.machine())
+import os.path
+path = '/etc/lsb-release'		# works with Mint
+check_file = os.path.isfile(path)
+if check_file:
+	distro = open(path, 'r').read()
+	distro = distro.replace('\n', '')
+	distro = distro.replace('"', '')
+	xstart=distro.find("DISTRIB_DESCRIPTION=")+20
+	print (bcolors.OKGREEN + bcolors.BOLD + "\tOS: " + bcolors.ENDC + distro[xstart:] + " " + platform.machine())
+else:
+	path = '/etc/os-release'		# maybe other distros
+	check_file = os.path.isfile(path)
+	if check_file:
+		distro = open(path, 'r').read()
+		distro = distro.replace('\n', '')
+		distro = distro.replace('"', '')
+		xstart=distro.find("PRETTY_NAME=")+12
+		xstop=distro.find("VERSION_ID")
+		print (bcolors.OKGREEN + bcolors.BOLD + "\tOS: " + bcolors.ENDC + distro[xstart:xstop] + " " + platform.machine())
+	else:
+		# place code here for other distros
+		print (bcolors.OKGREEN + bcolors.BOLD + "\tOS: " + bcolors.ENDC + "try another method for OS.")
+		
 
-import subprocess
-de_result = subprocess.run(['cinnamon', '--version'], stdout=subprocess.PIPE)
-de_result = de_result.stdout.decode('utf-8')
-de_result = de_result.replace('\n', '')
+path = '/etc/linuxmint/info'		# works with Mint
+check_file = os.path.isfile(path)
+if check_file:
+	distro = open(path, 'r').read()
+	xstart=distro.find("Cinnamon")
+	if xstart>1:
+		import subprocess
+		de_result = subprocess.run(['cinnamon', '--version'], stdout=subprocess.PIPE)
+		de_result = de_result.stdout.decode('utf-8')
+		de_result = de_result.replace('\n', '')
+	else:
+		de_result = "try another method for DE."
+
 print( bcolors.OKGREEN + "\tDE: " + bcolors.ENDC + de_result)
-
+	
 print (bcolors.OKGREEN + "\tKernel: " + bcolors.ENDC + platform.release())
-
-producthost = open('/sys/devices/virtual/dmi/id/product_name', 'r').read()
-producthost = producthost.replace('\n', '')
-productvnd = open('/sys/devices/virtual/dmi/id/sys_vendor', 'r').read()
-productvnd = productvnd.replace('\n', '')
 print (bcolors.OKGREEN + "\tPlatform: " + bcolors.ENDC + platform.platform())
-
+	
 print (bcolors.OKBLUE + "\t---- hardware -------" + bcolors.ENDC)
 
-print (bcolors.OKGREEN + "\tComputer vendor: " + bcolors.ENDC + productvnd + " " + producthost)
-
+path = '/sys/devices/virtual/dmi/id/product_name'		# works with Mint
+check_file = os.path.isfile(path)
+if check_file:
+	producthost = open(path, 'r').read()
+	producthost = producthost.replace('\n', '')
+	productvnd = open('/sys/devices/virtual/dmi/id/sys_vendor', 'r').read()
+	productvnd = productvnd.replace('\n', '')
+	print (bcolors.OKGREEN + "\tComputer vendor: " + bcolors.ENDC + productvnd + " " + producthost)
+else:
+	de_result = "try another method for vendor."
+		
 import cpuinfo
 from cpuinfo import get_cpu_info
 info = get_cpu_info()
