@@ -12,12 +12,12 @@ and then copy the file somewhere in the path, maybe /usr/bin
 and then rename it to "pyfetch" - and now it will run from anywhere as "pyfetch".
 
 Here's a sample of what it displays:
-  ---- software -------
-  OS: Linux Mint 21.1 Vera x86_64
-  DE: Cinnamon 5.6.7
-  Kernel: 5.15.0-67-generic
-  Platform: Linux-5.15.0-67-generic-x86_64-with-glibc2.35
-  ---- hardware -------
+  **---- software -------**  
+  OS: Linux Mint 21.1 Vera x86_64  
+  DE: Cinnamon 5.6.7  
+  Kernel: 5.15.0-67-generic  
+  Platform: Linux-5.15.0-67-generic-x86_64-with-glibc2.35  
+  **---- hardware -------**  
   Computer vendor: Dell Inc. OptiPlex 7050
   CPU: Intel(R) Core(TM) i7-6700 CPU @ 3.40GHz (8 cores)
   ---- internet -------
