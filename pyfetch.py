@@ -4,6 +4,7 @@
 
 class bcolors:
     OKGREEN = '\033[92m'
+    OKBLUE = '\033[94m'
     WARNING = '\033[93m'
     FAIL = '\033[91m'
     ENDC = '\033[0m'
@@ -24,7 +25,7 @@ def listToString(s):
 import os
 import socket
 print ("\t" + bcolors.OKGREEN + bcolors.BOLD + os.getlogin() + "@" + socket.gethostname() + bcolors.ENDC)
-print ("\t-----")
+print (bcolors.OKBLUE + "\t---- software -------" + bcolors.ENDC)
 
 import distro
 import platform
@@ -34,27 +35,33 @@ distro = distro.replace('"', '')
 x=distro.find("DISTRIB_DESCRIPTION=")+20
 print (bcolors.OKGREEN + bcolors.BOLD + "\tOS: " + bcolors.ENDC + distro[x:] + " " + platform.machine())
 
-producthost = open('/sys/devices/virtual/dmi/id/product_name', 'r').read()
-producthost = producthost.replace('\n', '')
-productvnd = open('/sys/devices/virtual/dmi/id/sys_vendor', 'r').read()
-productvnd = productvnd.replace('\n', '')
-print (bcolors.OKGREEN + "\tHost: " + bcolors.ENDC + productvnd + " " + producthost)
-
-print (bcolors.OKGREEN + "\tKernel: " + bcolors.ENDC + platform.release())
-print (bcolors.OKGREEN + "\tPlatform: " + bcolors.ENDC + platform.platform())
-
 import subprocess
 de_result = subprocess.run(['cinnamon', '--version'], stdout=subprocess.PIPE)
 de_result = de_result.stdout.decode('utf-8')
 de_result = de_result.replace('\n', '')
 print( bcolors.OKGREEN + "\tDE: " + bcolors.ENDC + de_result)
-print(bcolors.OKGREEN + "\tHost Name: " + bcolors.ENDC + socket.gethostname())
+
+print (bcolors.OKGREEN + "\tKernel: " + bcolors.ENDC + platform.release())
+
+producthost = open('/sys/devices/virtual/dmi/id/product_name', 'r').read()
+producthost = producthost.replace('\n', '')
+productvnd = open('/sys/devices/virtual/dmi/id/sys_vendor', 'r').read()
+productvnd = productvnd.replace('\n', '')
+print (bcolors.OKGREEN + "\tPlatform: " + bcolors.ENDC + platform.platform())
+
+print (bcolors.OKBLUE + "\t---- hardware -------" + bcolors.ENDC)
+
+print (bcolors.OKGREEN + "\tComputer vendor: " + bcolors.ENDC + productvnd + " " + producthost)
 
 import cpuinfo
 from cpuinfo import get_cpu_info
 info = get_cpu_info()
 cores = info['count']
 print(bcolors.OKGREEN + "\tCPU: " + bcolors.ENDC + info['brand_raw'] + " (" + str(cores).strip() + " cores)") 
+
+print (bcolors.OKBLUE + "\t---- internet -------" + bcolors.ENDC)
+
+print(bcolors.OKGREEN + "\tNetwork Host Name: " + bcolors.ENDC + socket.gethostname())
 
 # IP info
 myip = socket.gethostbyaddr(socket.gethostname())[2]
