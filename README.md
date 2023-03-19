@@ -1,7 +1,7 @@
 # pyfetch
-A small module for learning Python, and posting information about my system.
+A small, terminal based, module for learning Python, and posting information about my system. Similar to neofetch, but it prints info I need.
 
-I've tested it on my Linux Mint computer, and it works with python3. There's no error checking. I just wrote it to learn about Python.
+I've tested it on my Linux Mint computer, and it works with python3. There's no error checking, so it will probably crash in other distros (good learning experience). I just wrote it to learn about Python on my computer.
 My next version will be GUI.
 
 run it like this: python3 pyfetch.py
@@ -26,5 +26,3 @@ Here's a sample of what it displays:
   Internal lo IP:  127.0.1.1  
   External v4 IP: xx.xx.xx.xx  
   External v6 IP: yyyy.yyyy.....  
-  
-
