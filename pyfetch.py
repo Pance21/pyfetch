@@ -25,7 +25,7 @@ def listToString(s):
 import os
 import socket
 print ("\t" + bcolors.OKGREEN + bcolors.BOLD + os.getlogin() + "@" + socket.gethostname() + bcolors.ENDC)
-print (bcolors.OKBLUE + "\t---- software -------" + bcolors.ENDC)
+print (bcolors.OKBLUE + "\t---- system/software -------" + bcolors.ENDC)
 
 import distro
 import platform
@@ -89,6 +89,18 @@ from cpuinfo import get_cpu_info
 info = get_cpu_info()
 cores = info['count']
 print(bcolors.OKGREEN + "\tCPU: " + bcolors.ENDC + info['brand_raw'] + " (" + str(cores).strip() + " cores)") 
+
+de_result = subprocess.run(['grep MemTotal /proc/meminfo'], stdout=subprocess.PIPE, shell=True)
+de_result = de_result.stdout.decode('utf-8')
+de_result = de_result.replace('MemTotal:       ', '')
+de_result = de_result.replace(' kB', '')
+de_result = f'{int(de_result):,}'
+print( bcolors.OKGREEN + "\tRAM: " + bcolors.ENDC + de_result + ' kB')
+
+de_result = subprocess.run(['lspci | grep \'HD Graph\''], stdout=subprocess.PIPE, shell=True)
+de_result = de_result.stdout.decode('utf-8')
+de_result = de_result.replace('VGA compatible controller: ', '')
+print( bcolors.OKGREEN + "\tGraphics: " + bcolors.ENDC + de_result[8:])
 
 print (bcolors.OKBLUE + "\t---- internet -------" + bcolors.ENDC)
 
